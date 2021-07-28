@@ -7,7 +7,7 @@ module.exports = {
 		host: '127.0.0.1',
 		user: 'root',
 		password: 'toor',
-		database: 'cpm_file_finder'
+		database: 'cpm_systems'
     },
 	migrations: {
 		tableName: 'knex_migrations',
@@ -24,7 +24,7 @@ module.exports = {
 		host: '127.0.0.1',
 		user: 'root',
 		password: 'toor',
-		database: 'cpm_file_finder'
+		database: 'cpm_systems'
     },
     pool: {
       min: 2,

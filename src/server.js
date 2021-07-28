@@ -1,8 +1,6 @@
 const fastify = require('fastify')({ logger: true })
 
-fastify.get('/', (request, reply) => {
-	reply.send({ hello: 'world' })
-})
+fastify.register(require('./routes'));
 
 fastify.listen(3000, err => {
 	if (err) {
