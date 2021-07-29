@@ -14,82 +14,30 @@ module.exports = {
 		try {
 			const { number, name, box } = request.body;
 
-			const schema = Joi.object().keys({
+			console.log(typeof number, typeof name, typeof box);
+			
+			const schema = Joi.object({
 				number: Joi
 				.string()
 				.min(2)
 				.max(3)
 				.required()
-				.pattern(\dd\)
-				.error(errors => {
-					errors.forEach(error => {
-						switch(error.code) {
-							case 'string.base':
-								error.message = 'No campo "número" é permitido apenas números';
-								break;
-							case 'string.min':
-								error.message = 'No campo "número" não é permitido número decimal';
-								break;
-							case 'string.max':
-								error.message = 'No campo "número" não é permitido número decimal';
-								break;
-							case 'string.empty':
-								error.message = 'No campo "número" não é permitido número negativo';
-								break;
-							default:
-								break;
-						}
-					});
-
-					return errors;
+				.pattern(new RegExp(/\d{2, 3}/))
+				.messages({
+					'string.min': `No campo "Nº" é permitido apenas números com no mínimo 2 dígitos`,
+					'string.max': `No campo "Nº" não é permitido números com mais de 3 dígitos`,
+					'string.empty': `O campo "Nº" não pode estar vazio`,
+					'string.pattern.base': `test`
 				}),
-
-				/* name: Joi
-				.string()
-				.min(3)
-				.max(40)
-				.required()
-				.error(errors => {
-					errors.forEach(error => {
-						switch (error.code) {
-							case 'string.base':
-								error.message = 'No campo "nome" é permitido apenas letras e caracteres';
-								break;
-							case 'string.min':
-								error.message = 'No campo "nome" é permitido apenas nomes com três ou mais letras ou caracteres';
-								break;
-							case 'string.max':
-								error.message = 'No campo "nome" é permitido apenas nomes com quarenta ou menos caracteres';
-								break;
-							case 'string.empty':
-								error.message = 'O campo "nome" não pode estar vazio' 
-								break;
-							default:
-								break;
-						}
-					});
-
-					return errors;
-				}),
-
-				box: Joi
-				.alphanum()
-				.min(4)
-				.max(5)
-				.required()
-				.error(errors => {
-					errors.forEach(error => {
-						switch (error.code) {
-							case 'alphanum.base':
-								error.message = 'só permitimos caracteres alfa númericos.';
-						}
-					});
-				}) */
 			});
 
 			const { error } = schema.validate({ number });
+			
+		  if (error) {
+				return { error: error.message };
+			}
 
-			return { error };
+			return { status: 'passou' };
 		} catch (e) {
 			return e;
 		}
