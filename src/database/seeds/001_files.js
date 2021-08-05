@@ -8,17 +8,17 @@ exports.seed = knex => {
         {
 			number: '01',
 			name: 'Ronildo Ribeiro de Almeida',
-			box: '01 A'
+			box: 'A 01'
 		},
         {
 			number: '02',
 			name: 'Higor Cardoso Silva',
-			box: '01 A'
+			box: 'A 01'
 		},
         {
 			number: '03',
 			name: 'João Vitor Oliveira',
-			box: '01 A'
+			box: 'A 01'
 		}
       ]);
     });

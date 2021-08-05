@@ -1,4 +1,4 @@
-const Joi = require('joi');
+	const Joi = require('joi');
 
 module.exports = (number, name, box) => {
 	const schema = Joi.object({
@@ -34,9 +34,9 @@ module.exports = (number, name, box) => {
 		.pattern(/^[A-Z]{1,1} [0-9]{2,3}$/)
 		.messages({
 			'string.empty': `O campo "Caixa" não pode estar vazio`,
-			'string.min': `O nome da caixa não pode ter menos de 4 caracteres`,
-			'string.max': `O nome da caixa não pode ter mais de 5 caracteres`,
-			'string.pattern.base': `O nome da caixa não é um nome válido`
+			'string.min': `O identificador da caixa não pode ter menos de 4 caracteres`,
+			'string.max': `O identificador da caixa não pode ter mais de 5 caracteres`,
+			'string.pattern.base': `O identificador da caixa não é um identificador válido`
 		})
 	});
 	
