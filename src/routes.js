@@ -5,7 +5,7 @@ module.exports = function (fastify, options, done) {
 	fastify.get('/files', FileController.index);
 	fastify.post('/files', FileController.create);
 	fastify.put('/files/:id', FileController.update);
-	// fastify.delete('/files/:id', FileController.delete);
+	fastify.delete('/files/:id', FileController.delete);
 
 	done();
 }
