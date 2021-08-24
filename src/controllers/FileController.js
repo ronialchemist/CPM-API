@@ -1,29 +1,30 @@
 const knex = require('../database');
 const fileDataValidator = require('../utils/fileDataValidator');
 const idValidator = require('../utils/idValidator');
-const pageNumberValidator = require('../utils/pageNumberValidator');
+const nameValidator = require('../utils/nameValidator');
 
 module.exports = {
 	async index (request, reply) {
 		try {
-			const { page = 1 } = request.query;
+			const name = request
+									 .query
+									 .name
+									 .replace(/\+/g, ' ');
 
-			const pageNumberError = pageNumberValidator(page);
+			const nameError = nameValidator(name);
 
-			if (pageNumberError) {
-				throw { error: pageNumberError.message };
+			if (nameError) {
+				throw { error: nameError.message };
 			}
 
-			const query = knex('files')
-										.limit(5)
-										.offset((page - 1) * 5);
-
+			reply.header('Access-Control-Allow-Origin', '*');
 			const [ count ] = await knex('files').count();
-
 			reply.header('X-Total-Count', count['count(*)']);
 
-			return await query;
+			return await knex('files')
+									 .where('name', 'like', `%${name}%`);
 		} catch (e) {
+			reply.header('Access-Control-Allow-Origin', '*');
 			reply.status(500).send(e);
 		}
 	},
