@@ -17,21 +17,21 @@ module.exports = {
 				throw { error: nameError.message };
 			}
 
-			reply.header('Access-Control-Allow-Origin', '*');
 			const [ count ] = await knex('files').count();
 			reply.header('X-Total-Count', count['count(*)']);
 
 			return await knex('files')
 									 .where('name', 'like', `%${name}%`);
 		} catch (e) {
-			reply.header('Access-Control-Allow-Origin', '*');
 			reply.status(500).send(e);
 		}
 	},
 
 	async create (request, reply) {
 		try {
-			const { number, name, box } = request.body;
+			const { number, name, box } = JSON.parse(request.body);
+
+			console.log(number, name, box);
 		
 			const fileDataError = fileDataValidator(number, name, box);
 
@@ -40,6 +40,9 @@ module.exports = {
 			}
 				
 			await knex('files').insert({ number, name, box });
+
+  		reply.header('Accept', 'application/json');
+  		reply.header('Content-Type', 'application/json');
 
 			reply
 			.status(201)
