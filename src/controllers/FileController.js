@@ -30,16 +30,15 @@ module.exports = {
 	async create (request, reply) {
 		try {
 			const { number, name, box } = JSON.parse(request.body);
+			const time_course = 'DIURNO';
 
-			console.log(number, name, box);
-		
 			const fileDataError = fileDataValidator(number, name, box);
 
 			if (fileDataError) {
 				throw { error: fileDataError.message };
 			}
 				
-			await knex('files').insert({ number, name, box });
+			await knex('files').insert({ number, name, box, time_course });
 
   		reply.header('Accept', 'application/json');
   		reply.header('Content-Type', 'application/json');
